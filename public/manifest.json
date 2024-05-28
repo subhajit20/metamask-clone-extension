@@ -1,0 +1,33 @@
+{
+    "manifest_version": 3,
+    "name": "vite-ts-react-test",
+    "version": "1.0",
+    "description": "",
+    "action": {
+        "default_popup": "index.html"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": [
+        "scripting",
+        "tabs",
+        "activeTab"
+    ],
+    "host_permissions": [
+        "https://*/*",
+        "http://*/*"
+    ],
+    "icons": {
+        "16": "/assets/MetaMask_Fox-C51rrBvL.png",
+        "32": "/assets/MetaMask_Fox-C51rrBvL.png",
+        "48": "/assets/MetaMask_Fox-C51rrBvL.png",
+        "128": "/assets/MetaMask_Fox-C51rrBvL.png"
+      },
+    "content_scripts": [
+        {
+          "matches": ["<all_urls>"],
+          "js": ["content.js"]
+        }
+      ]
+  }
