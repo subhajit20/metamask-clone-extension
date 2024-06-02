@@ -1,16 +1,21 @@
+import React,{ Suspense } from 'react';
 import './App.css';
-import Home from './pages/Home';
-import ImportWallet from './pages/ImportWallet';
 import { Routes,Route } from 'react-router-dom';
+import { Spin } from 'antd';
+
+const Home = React.lazy(() => import('./pages/Home'));
+const ImportWallet = React.lazy(() => import('./pages/ImportWallet'));
 
 function App() {
 
   return (
         <div className='w-[357px] h-[600px]'>
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/importwallet' element={<ImportWallet />} />
-          </Routes>
+          <Suspense fallback={<div className='h-full flex justify-center items-center'><Spin size="large" /> </div>}>
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/importwallet' element={<ImportWallet />} />
+            </Routes>
+          </Suspense>
         </div>
   )
 }
