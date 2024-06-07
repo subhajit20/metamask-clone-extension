@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react"
+import { useCallback, useState } from "react"
 import PhraseInputs from "./PhraseInputs"
 import { Button } from "@nextui-org/react"
 import { Wallet } from "ethers"
-import { Alert, Spin } from "antd"
+import { Alert, Spin } from "antd";
+import { UseDispatch, useDispatch } from "react-redux";
+import { setAccount } from "../../store/slice";
 // import React from 'react'
-// type Props = {}
+type Props = {
+    function?: ()=> void
+}
 
 export interface phraseType {
         pharse1:string,
@@ -21,7 +25,8 @@ export interface phraseType {
         pharse12:string,
 }
 
-const InputsHolder = () => {
+
+const InputsHolder = (props: Props) => {
     const [phrases,setPhrase] = useState<phraseType>({
         pharse1:'',
         pharse2:'',
@@ -36,8 +41,9 @@ const InputsHolder = () => {
         pharse11:'',
         pharse12:'',
     })
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState<string | null | boolean>(null);
     const [loader,setLoading] = useState<boolean>(false)
+    const dispatch = useDispatch();
 
     const onPhraseChnage = (e:React.ChangeEvent<HTMLInputElement>) =>{
         setPhrase((prev)=> {
@@ -45,16 +51,18 @@ const InputsHolder = () => {
         })
     }
 
-    const verifyPhrase = () =>{
+    const verifyPhrase = useCallback(() =>{
         try{
             setLoading(true)
             let phrase:string = ''
             Object.entries(phrases).map((p,i)=>{
+                // console.log(p)
                 if(p[1] === ''){
                     throw new Error("Invalid field");
                 }else{
-                    if(p[i] >= Object.entries(phrases).length){
-                        phrase += ` ${p[1]}`
+                    if(i >= Object.entries(phrases).length - 1){
+                        console.log('Hello')
+                        phrase += `${p[1]}`
                     }else{
                         phrase += `${p[1]} `
                     }
@@ -62,16 +70,24 @@ const InputsHolder = () => {
             })
             console.log(phrase)
             const account = Wallet.fromPhrase(phrase);
+            
+            dispatch(setAccount({
+                acc: account
+            }))
+            localStorage.setItem('acc',JSON.stringify(account))
             console.log(account);
             setLoading(false);
+            setError(false);
+            props.function!();
         }catch(e){
             if(e instanceof TypeError){
                 console.log("TypeError",e.message)
-                setError(e.message)
+                setError('invalid mnemonic length')
             }else if(e instanceof Error){
                 console.log(e.message)
                 setError(e.message)
             }
+            // setError(true)
             setLoading(false);
         }finally{
             setTimeout(()=>{
@@ -79,16 +95,18 @@ const InputsHolder = () => {
             },3000);
             setLoading(false);
         }
-    }
+    },[phrases]);
 
-    useEffect(()=>{
-        console.log(phrases);
-    },[phrases])
+    // useEffect(()=>{
+    //     console.log(phrases);
+    // },[phrases])
   return (
       <div className="flex flex-col justify-center gap-y-4">
+        <div className="h-14 w-full">
         {
-            error !== null && <Alert message={error} type="error" showIcon  />
+            error !== null && <Alert message={error === false ? "Wallet is verified" : error} type={error === false ? "success" : "error"} showIcon  />
         }
+        </div>
         <div className="grid grid-cols-3 justify-center gap-3">
             {/* {phrases.pharse1} */}
             {

@@ -1,21 +1,21 @@
-import React from 'react';
+// import React from 'react';
 import MetaMask from '../assets/MetaMask_Fox.png';
-import { Wallet } from 'ethers';
+// import { Wallet } from 'ethers';
 
 // type Props = {}
 
 const Home = () => {
 
-  React.useEffect(()=>{
-    function account(){
-      const account = Wallet.fromPhrase("pen sail network term grape melt debris obscure dwarf oppose acoustic unique");
-      console.log(account);
-      const acc = new Wallet(account.privateKey)
-      console.log(acc)
-    }
+  // React.useEffect(()=>{
+  //   function account(){
+  //     const account = Wallet.fromPhrase("pen sail network term grape melt debris obscure dwarf oppose acoustic unique");
+  //     console.log(account);
+  //     const acc = new Wallet(account.privateKey)
+  //     console.log(acc)
+  //   }
 
-    account();
-  },[])
+  //   account();
+  // },[])
   return (
         <div className='flex flex-col items-center  justify-center gap-y-5 w-full h-full bg-white p-5'>
           <img src={MetaMask} alt="" height={200} width={200} />
@@ -27,7 +27,7 @@ const Home = () => {
           <a href='#/importwallet' className='text-lg w-full p-2 btn btn-primary rounded-full'>
             <button >Register</button>
           </a>
-          <a href="/#importwallet" className='text-blue-500 text-base'>
+          <a href="#/importwallet" className='text-blue-500 text-base'>
             <button>Forget Password</button>
           </a>
       </div>
