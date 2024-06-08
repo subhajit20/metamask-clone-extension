@@ -5,6 +5,7 @@ import { Spin } from 'antd';
 
 const Home = React.lazy(() => import('./pages/Home'));
 const ImportWallet = React.lazy(() => import('./pages/ImportWallet'));
+const Dashboard = React.lazy(() => import('./pages/Dashboard'));
 
 function App() {
 
@@ -14,6 +15,8 @@ function App() {
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/importwallet' element={<ImportWallet />} />
+              <Route path='/dashboard' element={<Dashboard />} />
+              <Route path='*' element={<>Not Found!</>} />
             </Routes>
           </Suspense>
         </div>

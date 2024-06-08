@@ -3,7 +3,7 @@ import PhraseInputs from "./PhraseInputs"
 import { Button } from "@nextui-org/react"
 import { Wallet } from "ethers"
 import { Alert, Spin } from "antd";
-import { UseDispatch, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setAccount } from "../../store/slice";
 // import React from 'react'
 type Props = {

@@ -27,7 +27,7 @@ const Home = () => {
           <a href='#/importwallet' className='text-lg w-full p-2 btn btn-primary rounded-full'>
             <button >Register</button>
           </a>
-          <a href="#/importwallet" className='text-blue-500 text-base'>
+          <a href="#/dashboard" className='text-blue-500 text-base'>
             <button>Forget Password</button>
           </a>
       </div>
